@@ -11,6 +11,7 @@ GameObject:
   - 33: {fileID: 3300000}
   - 64: {fileID: 6400000}
   - 23: {fileID: 2300000}
+  - 148: {fileID: 14800010}
   m_Layer: 0
   m_Name: ground
   m_TagString: Untagged
@@ -29,6 +30,7 @@ GameObject:
   - 33: {fileID: 3300002}
   - 64: {fileID: 6400002}
   - 23: {fileID: 2300002}
+  - 148: {fileID: 14800004}
   m_Layer: 0
   m_Name: wallx-
   m_TagString: Untagged
@@ -44,7 +46,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400004}
-  - 148: {fileID: 14800000}
   m_Layer: 0
   m_Name: World
   m_TagString: World
@@ -63,6 +64,7 @@ GameObject:
   - 33: {fileID: 3300004}
   - 64: {fileID: 6400004}
   - 23: {fileID: 2300004}
+  - 148: {fileID: 14800012}
   m_Layer: 0
   m_Name: sky
   m_TagString: Untagged
@@ -79,6 +81,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400008}
   - 108: {fileID: 10800000}
+  - 148: {fileID: 14800014}
   m_Layer: 0
   m_Name: light
   m_TagString: Untagged
@@ -97,6 +100,7 @@ GameObject:
   - 33: {fileID: 3300006}
   - 64: {fileID: 6400006}
   - 23: {fileID: 2300006}
+  - 148: {fileID: 14800008}
   m_Layer: 0
   m_Name: wallz-
   m_TagString: Untagged
@@ -115,6 +119,7 @@ GameObject:
   - 33: {fileID: 3300008}
   - 64: {fileID: 6400008}
   - 23: {fileID: 2300008}
+  - 148: {fileID: 14800006}
   m_Layer: 0
   m_Name: wallz+
   m_TagString: Untagged
@@ -133,6 +138,7 @@ GameObject:
   - 33: {fileID: 3300010}
   - 64: {fileID: 6400010}
   - 23: {fileID: 2300010}
+  - 148: {fileID: 14800002}
   m_Layer: 0
   m_Name: wallx+
   m_TagString: Untagged
@@ -518,15 +524,87 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
---- !u!148 &14800000
+--- !u!148 &14800002
 NetworkView:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100004}
+  m_GameObject: {fileID: 100014}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 400004}
+  m_Observed: {fileID: 400014}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800004
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400002}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800006
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400012}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800008
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100010}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400010}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800010
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400000}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800012
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400006}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800014
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100008}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400008}
   m_ViewID:
     m_ID: 0
     m_Type: 0
