@@ -13,6 +13,7 @@ public class Connect : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		Screen.showCursor = false;
 		MasterServer.RequestHostList("norgg.connections");
 	}
 

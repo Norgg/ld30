@@ -22,8 +22,8 @@ public class NetworkInterpolatedTransform : MonoBehaviour
 	{
 		// Always send transform (depending on reliability of the network view)
 		if (stream.isWriting) {
-			Vector3 pos = transform.position;
-			Quaternion rot = transform.rotation;
+			Vector3 pos = transform.localPosition;
+			Quaternion rot = transform.localRotation;
 			stream.Serialize (ref pos);
 			stream.Serialize (ref rot);
 			// When receiving, buffer the information
@@ -90,8 +90,8 @@ public class NetworkInterpolatedTransform : MonoBehaviour
 							t = (float)((interpolationTime - lhs.timestamp) / length);
 						
 						// if t=0 => lhs is used directly
-						transform.position = Vector3.Lerp (lhs.pos, rhs.pos, t);
-						transform.rotation = Quaternion.Slerp (lhs.rot, rhs.rot, t);
+						transform.localPosition = Vector3.Lerp (lhs.pos, rhs.pos, t);
+						transform.localRotation = Quaternion.Slerp (lhs.rot, rhs.rot, t);
 						return;
 					}
 				}
@@ -99,8 +99,8 @@ public class NetworkInterpolatedTransform : MonoBehaviour
 				// received state. You can do clever stuff with predicting what should happen.
 			} else {
 				State latest = m_BufferedState[0];
-				transform.position = latest.pos;
-				transform.rotation = latest.rot;
+				transform.localPosition = latest.pos;
+				transform.localRotation = latest.rot;
 			}
 		}
 	}
