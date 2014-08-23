@@ -72,7 +72,7 @@ public class NetworkInterpolatedTransform : MonoBehaviour
 			// Check if latest state exceeds interpolation time, if this is the case then
 			// it is too old and extrapolation should be used
 			if (m_BufferedState[0].timestamp > interpolationTime) {
-				Debug.Log (m_BufferedState[0]);
+				//Debug.Log (m_BufferedState[0]);
 				for (int i = 0; i < m_TimestampCount; i++) {
 					// Find the state which matches the interpolation time (time+0.1) or use last state
 					if (m_BufferedState[i].timestamp <= interpolationTime || i == m_TimestampCount - 1) {
