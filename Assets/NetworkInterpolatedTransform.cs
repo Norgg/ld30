@@ -99,8 +99,8 @@ public class NetworkInterpolatedTransform : MonoBehaviour
 				// received state. You can do clever stuff with predicting what should happen.
 			} else {
 				State latest = m_BufferedState[0];
-				//transform.position = latest.pos;
-				//transform.rotation = latest.rot;
+				transform.position = latest.pos;
+				transform.rotation = latest.rot;
 			}
 		}
 	}
