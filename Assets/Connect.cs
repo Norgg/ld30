@@ -9,6 +9,7 @@ public class Connect : MonoBehaviour {
 
 	public GameObject playerObj;
 	public GameObject worldObj;
+	public GameObject seedObj;
 	GameObject player;
 
 	// Use this for initialization
@@ -100,7 +101,11 @@ public class Connect : MonoBehaviour {
 
 	void OnServerInitialized() {
 		Network.Instantiate(worldObj, new Vector3(0, 0, 0), Quaternion.identity, 0);
-		Network.Instantiate(playerObj, new Vector3(0, 1, 0), Quaternion.identity, 0);
+		Network.Instantiate(playerObj, new Vector3(0, 1, -4), Quaternion.identity, 0);
+		Network.Instantiate(seedObj, new Vector3(1, 2, 1), Quaternion.identity, 0);
+		Network.Instantiate(seedObj, new Vector3(1, 2, -1), Quaternion.identity, 0);
+		Network.Instantiate(seedObj, new Vector3(-1, 2, 1), Quaternion.identity, 0);
+		Network.Instantiate(seedObj, new Vector3(-1, 2, -1), Quaternion.identity, 0);
 	}
 
 	void OnDisconnectedFromServer() {

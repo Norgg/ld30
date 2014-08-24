@@ -88,6 +88,7 @@ GameObject:
   - 148: {fileID: 14800000}
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400010}
+  - 114: {fileID: 11400016}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -213,7 +214,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: -4.89298153, z: 0}
   m_LocalScale: {x: 1, y: .200000003, z: 1}
   m_Children:
   - {fileID: 400006}
@@ -554,9 +555,9 @@ MonoBehaviour:
   canControl: 1
   useFixedUpdate: 1
   movement:
-    maxForwardSpeed: 10
-    maxSidewaysSpeed: 10
-    maxBackwardsSpeed: 10
+    maxForwardSpeed: 5
+    maxSidewaysSpeed: 5
+    maxBackwardsSpeed: 5
     slopeSpeedMultiplier:
       serializedVersion: 2
       m_Curve:
@@ -638,6 +639,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da913494f2f2f9243b29d64a138ff9a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11400016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7d67331d3b2be41938eaddda98def2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!124 &12400000

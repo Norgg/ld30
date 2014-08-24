@@ -13,7 +13,9 @@ public class RotateToCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Rotate(new Vector3(0, cam.transform.localEulerAngles.y, 0));
-		cam.transform.localEulerAngles = new Vector3(cam.transform.rotation.eulerAngles.x, 0, cam.transform.rotation.eulerAngles.z);
+		if (transform.networkView.isMine) {
+			transform.Rotate(new Vector3(0, cam.transform.localEulerAngles.y, 0));
+			cam.transform.localEulerAngles = new Vector3(cam.transform.rotation.eulerAngles.x, 0, cam.transform.rotation.eulerAngles.z);
+		}
 	}
 }
