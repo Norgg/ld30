@@ -23,9 +23,11 @@ public class Watering : MonoBehaviour {
 		outlineWater = transform.Find("Outline Water");
 		outlinePos = outlineWater.localPosition;
 		baseWaterScale = heldWater.transform.localScale;
-		particles = ((GameObject)Network.Instantiate(particleSystemObj, transform.position, Quaternion.identity, 0)).particleSystem;
-		particles.enableEmission = false;
-		particles.transform.parent = transform;
+		if (networkView.isMine) {
+			particles = ((GameObject)Network.Instantiate(particleSystemObj, transform.position, Quaternion.identity, 0)).particleSystem;
+			particles.enableEmission = false;
+			particles.transform.parent = transform;
+		}
 	}
 
 	[RPC]
@@ -38,6 +40,11 @@ public class Watering : MonoBehaviour {
 
 	void RestoreOutline() {
 		outlineWater.localPosition = outlinePos;
+	}
+
+	[RPC]
+	void sprinkle(bool on) {
+		particles.enableEmission = on;
 	}
 	
 	// Update is called once per frame
@@ -55,10 +62,12 @@ public class Watering : MonoBehaviour {
 						//hit.transform.GetComponent<Grow>().water+=5;
 						particles.transform.localPosition = Vector3.zero;
 						particles.transform.LookAt(hit.transform.position);
+						if (!particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, true);
 						particles.enableEmission = true;
 						water-=10;
 						heldWater.transform.localScale = baseWaterScale * water / (float)maxWater;
 					} else {
+						if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, false);
 						particles.enableEmission = false;
 						Hashtable opts = new Hashtable();
 						opts.Add("amount", new Vector3(0.02f, 0.02f, 0.02f));
@@ -72,6 +81,7 @@ public class Watering : MonoBehaviour {
 				} else if (hit.transform.name.StartsWith("Water") && water < maxWater) {
 					particles.transform.position = hit.transform.position;
 					particles.transform.LookAt(transform.position);
+					if (!particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, true);
 					particles.enableEmission = true;
 
 					water+= 20;
@@ -79,6 +89,7 @@ public class Watering : MonoBehaviour {
 				}
 			}
 		} else {
+			if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, false);
 			particles.enableEmission = false;
 		}
 	}
