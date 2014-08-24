@@ -10,14 +10,17 @@ public class Grow : MonoBehaviour {
 	int maxSprouts = 10;
 	int sprouts = 0;
 	List<GameObject> petals = new List<GameObject>();
+	Daycycle daycycle;
 
 	void Start () {
 		baseColor = renderer.material.color;
 		water = startWater;
+		daycycle = GameObject.Find("Sun").GetComponent<Daycycle>();
 	}
 	
 	void Update () {
 		if (!transform.networkView.isMine) return;
+		if (daycycle.sunlight < 0.5f) return;
 		if (water > 0) water--;
 
 		foreach (GameObject petal in petals) {
@@ -59,7 +62,6 @@ public class Grow : MonoBehaviour {
 	void OnSerializeNetworkView (BitStream stream, NetworkMessageInfo info)
 	{
 		// Always send transform (depending on reliability of the network view)
-		Debug.Log("Serialising sprout");
 		stream.Serialize(ref water);
 		if (stream.isWriting) {
 			Vector3 pos = transform.localPosition;

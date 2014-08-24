@@ -1,11 +1,15 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Connect : MonoBehaviour {
 	bool connected = false;
 	bool client = false;
 	bool worldCreated = false;
-	int searchAttempts = 50;
+	static int maxSearchAttempts = 100;
+	int searchAttempts = maxSearchAttempts;
+
+	string connectingTo = null;
+	List<string> failed = new List<string>();
 
 	public GameObject playerObj;
 	public GameObject worldObj;
@@ -23,8 +27,18 @@ public class Connect : MonoBehaviour {
 		Network.RemoveRPCs(id);
 		Destroy(NetworkView.Find(id).gameObject);
 	}
+
+	void OnGUI() {
+		if (!connected) {
+			GUI.Label(new Rect(0,0,Screen.width,Screen.height),"Joining...");
+		}
+	}
 	
 	void Update() {
+		if (Input.GetKeyDown(KeyCode.R)) {
+			Application.LoadLevel(0);
+		}
+
 		if (connected && client && !worldCreated) {
 			// Find an existing world to connect this one to
 			GameObject[] worlds = GameObject.FindGameObjectsWithTag("World");
@@ -64,7 +78,7 @@ public class Connect : MonoBehaviour {
 					networkView.RPC("RemoveWall", RPCMode.AllBuffered, world.transform.Find("Wallz-").networkView.viewID);
 					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("Wallz+").networkView.viewID);
 				}
-				Network.Instantiate(playerObj, new Vector3(newWorld.transform.position.x, 1, newWorld.transform.position.z), Quaternion.identity, 0);
+				Network.Instantiate(playerObj, new Vector3(newWorld.transform.position.x, 1, newWorld.transform.position.z-4), Quaternion.identity, 0);
 				Network.Instantiate(seedObj, new Vector3(newWorld.transform.position.x+1, 2, newWorld.transform.position.z+1), Quaternion.identity, 0);
 				Network.Instantiate(seedObj, new Vector3(newWorld.transform.position.x+1, 2, newWorld.transform.position.z-1), Quaternion.identity, 0);
 				Network.Instantiate(seedObj, new Vector3(newWorld.transform.position.x-1, 2, newWorld.transform.position.z+1), Quaternion.identity, 0);
@@ -79,11 +93,12 @@ public class Connect : MonoBehaviour {
 				// Go through all the hosts in the host list, find a server with room
 				foreach (HostData element in data) {
 					Debug.Log(element.gameName);
-					if (element.connectedPlayers < element.playerLimit) {
+					if (element.connectedPlayers < element.playerLimit && !failed.Contains(element.gameName)) {
 						Network.Connect(element);
 						client = true;
-						Debug.Log("Connected to " + element.gameName);
-						searchAttempts = 5;
+						Debug.Log("Connecting to " + element.gameName);
+						connectingTo = element.gameName;
+						searchAttempts = maxSearchAttempts;
 					}
 				}
 				searchAttempts--;
@@ -93,7 +108,7 @@ public class Connect : MonoBehaviour {
 				connected = true;
 				client = false;
 				Debug.Log("Started own server.");
-				searchAttempts = 5;
+				searchAttempts = maxSearchAttempts;
 			}
 		}
 	}
@@ -115,5 +130,36 @@ public class Connect : MonoBehaviour {
 		client = false;
 		worldCreated = false;
 		connected = false;
+		Application.LoadLevel(0);
+	}
+
+	void OnFailedToConnect() {
+		Debug.Log("Couldn't connect to " + connectingTo);
+		client = false;
+		worldCreated = false;
+		connected = false;
+		MasterServer.RequestHostList("norgg.connections");
+		searchAttempts = maxSearchAttempts;
+		failed.Add(connectingTo);
+	}
+
+	[RPC]
+	void RemovePlayer(NetworkViewID id) {
+		GameObject p = NetworkView.Find(id).gameObject;
+		Transform body = p.transform.Find("Body");
+		body.renderer.material.color = new Color(0,0,0);
+		if (body.Find("REye") == null) Debug.Log("REye missing?!?");
+		body.Find("REye").renderer.material.color = new Color(0.3f, 0.3f, 0.3f);
+		body.Find("LEye").renderer.material.color = new Color(0.3f, 0.3f, 0.3f);
+	}
+
+	void OnPlayerDisconnected(NetworkPlayer player) {
+		// Take ownership of everything owned by that player
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		foreach (GameObject p in players) {
+			if (p.networkView.owner == player) {
+				networkView.RPC("RemovePlayer", RPCMode.AllBuffered, p.networkView.viewID);
+			}
+		}
 	}
 }

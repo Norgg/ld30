@@ -11,6 +11,15 @@ public class Crosshair : MonoBehaviour {
 		                	(Screen.height - crosshairTexture.height) / 2, 
 		                	crosshairTexture.width, 
 		                	crosshairTexture.height);
+		Screen.lockCursor = true;
+	}
+
+	void OnMouseDown() {
+		Screen.lockCursor = true;
+	}
+
+	void Update() {
+		if (Input.GetKeyDown("escape")) Screen.lockCursor = false;
 	}
 	
 	void OnGUI()

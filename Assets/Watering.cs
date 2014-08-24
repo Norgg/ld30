@@ -35,7 +35,7 @@ public class Watering : MonoBehaviour {
 			Vector3 fwd = cam.TransformDirection(Vector3.forward);
 			if (Physics.Raycast(cam.position, fwd, out hit, 3.0f)) {
 				if (hit.transform.name.StartsWith("Sprout")) {
-					Debug.Log("Watering");
+					//Debug.Log("Watering");
 					if (water > 0) {
 						networkView.RPC("WaterPlant", RPCMode.All, hit.transform.networkView.viewID);
 						//hit.transform.GetComponent<Grow>().water+=5;

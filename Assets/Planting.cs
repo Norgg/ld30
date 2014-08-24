@@ -24,7 +24,6 @@ public class Planting : MonoBehaviour {
 
 		if (heldSeed == null) {
 			if (Input.GetMouseButtonDown(0)) {
-				Debug.Log("Raycasting");
 				RaycastHit hit;
 				Vector3 fwd = cam.TransformDirection(Vector3.forward);
 				if (Physics.Raycast(cam.position, fwd, out hit, 3.0f)) {
