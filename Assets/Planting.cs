@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Planting : MonoBehaviour {
 	GameObject heldSeed = null;
-	public GameObject seedlingObj;
+	public GameObject sproutObj;
 	Transform cam;
 	Transform arm;
 
@@ -45,8 +45,14 @@ public class Planting : MonoBehaviour {
 						Debug.Log ("Planting seed");
 						networkView.RPC("RemoveSeed", RPCMode.AllBuffered, heldSeed.networkView.viewID);
 						heldSeed = null;
-						Network.Instantiate(seedlingObj, hit.point, Quaternion.identity, 0);
+						Network.Instantiate(sproutObj, hit.point, Quaternion.identity, 0);
+					} else {
+						heldSeed.rigidbody.velocity = new Vector3(0, 0, 0);
+						heldSeed = null;
 					}
+				} else {
+					heldSeed.rigidbody.velocity = new Vector3(0, 0, 0);
+					heldSeed = null;
 				}
 			}
 		}

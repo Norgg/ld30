@@ -3,13 +3,15 @@ using System.Collections;
 
 public class Daycycle : MonoBehaviour {
 
-	// Use this for initialization
+	public float sunlight = 0.0f;
+
 	void Start () {
 	
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		transform.Rotate(new Vector3(0.1f, 0, 0));
+		sunlight = 0.6f + Mathf.Sin((transform.localEulerAngles.x) * Mathf.Deg2Rad)/2;
+		light.intensity = sunlight;
 	}
 }

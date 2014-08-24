@@ -65,6 +65,10 @@ public class Connect : MonoBehaviour {
 					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("Wallz+").networkView.viewID);
 				}
 				Network.Instantiate(playerObj, new Vector3(newWorld.transform.position.x, 1, newWorld.transform.position.z), Quaternion.identity, 0);
+				Network.Instantiate(seedObj, new Vector3(newWorld.transform.position.x+1, 2, newWorld.transform.position.z+1), Quaternion.identity, 0);
+				Network.Instantiate(seedObj, new Vector3(newWorld.transform.position.x+1, 2, newWorld.transform.position.z-1), Quaternion.identity, 0);
+				Network.Instantiate(seedObj, new Vector3(newWorld.transform.position.x-1, 2, newWorld.transform.position.z+1), Quaternion.identity, 0);
+				Network.Instantiate(seedObj, new Vector3(newWorld.transform.position.x-1, 2, newWorld.transform.position.z-1), Quaternion.identity, 0);
 				worldCreated = true;
 			}
 		}
