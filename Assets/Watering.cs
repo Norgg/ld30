@@ -97,7 +97,7 @@ public class Watering : MonoBehaviour {
 				if (hit.transform.name.StartsWith("Sprout")) {
 					waterSprout(hit.transform);
 				} else if (hit.transform.name.StartsWith("Ground")) {
-					Collider[] colliders = Physics.OverlapSphere(hit.point, 1.0f);
+					Collider[] colliders = Physics.OverlapSphere(hit.point, 0.5f);
 					foreach (Collider c in colliders) {
 						if (c.name.StartsWith("Sprout")) {
 							waterSprout(c.transform);
