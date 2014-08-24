@@ -17,6 +17,7 @@ public class Grow : MonoBehaviour {
 	}
 	
 	void Update () {
+		if (!transform.networkView.isMine) return;
 		if (water > 0) water--;
 
 		foreach (GameObject petal in petals) {
@@ -53,5 +54,31 @@ public class Grow : MonoBehaviour {
 		                                                   0);
 		petal.transform.localScale = new Vector3(transform.localScale.x/5, transform.localScale.y/3, transform.localScale.z/5);
 		petals.Add(petal);
+	}
+
+	void OnSerializeNetworkView (BitStream stream, NetworkMessageInfo info)
+	{
+		// Always send transform (depending on reliability of the network view)
+		Debug.Log("Serialising sprout");
+		stream.Serialize(ref water);
+		if (stream.isWriting) {
+			Vector3 pos = transform.localPosition;
+			Quaternion rot = transform.localRotation;
+			Vector3 scale = transform.localScale;
+			stream.Serialize(ref pos);
+			stream.Serialize(ref rot);
+			stream.Serialize(ref scale);
+		} else {
+			// Receive latest state information
+			Vector3 pos = Vector3.zero;
+			Quaternion rot = Quaternion.identity;
+			Vector3 scale = Vector3.zero;
+			stream.Serialize (ref pos);
+			stream.Serialize (ref rot);
+			stream.Serialize (ref scale);
+			transform.localPosition = pos;
+			transform.localRotation = rot;
+			transform.localScale = scale;
+		}
 	}
 }

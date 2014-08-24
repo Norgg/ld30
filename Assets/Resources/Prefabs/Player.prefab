@@ -167,6 +167,7 @@ GameObject:
   - 33: {fileID: 3300012}
   - 135: {fileID: 13500004}
   - 23: {fileID: 2300012}
+  - 148: {fileID: 14800006}
   m_Layer: 0
   m_Name: Held Water
   m_TagString: Untagged
@@ -454,7 +455,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 86c8426fae42dc849a7b02b79a14b2c3, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -826,6 +827,18 @@ NetworkView:
   m_Enabled: 1
   m_StateSynchronization: 1
   m_Observed: {fileID: 400012}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800006
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100016}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 400016}
   m_ViewID:
     m_ID: 0
     m_Type: 0
