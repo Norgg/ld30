@@ -358,7 +358,7 @@ Renderer:
   m_GameObject: {fileID: 118755030}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
@@ -540,8 +540,8 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
-    m_Resolution: 3
+    m_Type: 2
+    m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
     m_Softness: 4
@@ -3509,7 +3509,7 @@ Renderer:
   m_GameObject: {fileID: 1782113965}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
@@ -3807,6 +3807,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 42527190397216b4f8f9fa42b7451dde, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300012, guid: 42527190397216b4f8f9fa42b7451dde, type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300014, guid: 42527190397216b4f8f9fa42b7451dde, type: 2}
+      propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
