@@ -624,7 +624,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -832,6 +832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sproutObj: {fileID: 100000, guid: d9a886de92a562349b2f7c5aaf8579ea, type: 2}
+  pickClip: {fileID: 8300000, guid: 5a74fed39a4646244948adf9c0fb4652, type: 3}
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -13,8 +13,10 @@ public class Watering : MonoBehaviour {
 	Vector3 baseWaterScale;
 
 	public GameObject particleSystemObj;
-	public AudioClip[] waterSounds;
 	ParticleSystem particles;
+
+	public AudioClip[] waterSounds;
+
 
 	bool watered = false;
 	bool playSounds = false;
@@ -80,7 +82,6 @@ public class Watering : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (playSounds && !audio.isPlaying) {
-			Debug.Log("Playing");
 			audio.clip = waterSounds[Mathf.FloorToInt(Random.value * waterSounds.Length)];
 			audio.Play();
 		}

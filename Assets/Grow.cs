@@ -13,6 +13,7 @@ public class Grow : MonoBehaviour {
 
 	public GameObject seedObj;
 	int seeds = 2;
+	public AudioClip plantClip;
 
 	void Start () {
 		baseColor = renderer.material.color;
@@ -20,6 +21,7 @@ public class Grow : MonoBehaviour {
 		daycycle = GameObject.Find("Sun").GetComponent<Daycycle>();
 
 		petalColor = new Color(Random.value, Random.value, Random.value);
+		audio.PlayOneShot(plantClip);
 		if (networkView.isMine) makePetals();
 	}
 	

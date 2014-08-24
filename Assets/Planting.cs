@@ -6,6 +6,7 @@ public class Planting : MonoBehaviour {
 	public GameObject sproutObj;
 	Transform cam;
 	Transform arm;
+	public AudioClip pickClip;
 
 	// Use this for initialization
 	void Start () {
@@ -30,6 +31,7 @@ public class Planting : MonoBehaviour {
 					if (hit.transform.name.StartsWith("Seed")) {
 						heldSeed = hit.transform.gameObject;
 						Debug.Log("Picked up a seed");
+						audio.PlayOneShot(pickClip);
 					}
 				}
 			}
