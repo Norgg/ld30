@@ -103,7 +103,7 @@ public class Connect : MonoBehaviour {
 				}
 				searchAttempts--;
 			} else {
-				Network.InitializeServer(32, 23242, !Network.HavePublicAddress());
+				Network.InitializeServer(8, 23242, !Network.HavePublicAddress());
 				MasterServer.RegisterHost("norgg.connections", SystemInfo.deviceUniqueIdentifier, "");
 				connected = true;
 				client = false;

@@ -5,7 +5,7 @@ public class Watering : MonoBehaviour {
 	Transform cam;
 	Transform heldWater;
 
-	static int maxWater = 1000;
+	static int maxWater = 3000;
 	int water = maxWater;
 	Vector3 baseWaterScale;
 
