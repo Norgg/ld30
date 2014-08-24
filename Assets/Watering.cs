@@ -13,9 +13,11 @@ public class Watering : MonoBehaviour {
 	Vector3 baseWaterScale;
 
 	public GameObject particleSystemObj;
+	public AudioClip[] waterSounds;
 	ParticleSystem particles;
 
 	bool watered = false;
+	bool playSounds = false;
 
 	// Use this for initialization
 	void Start () {
@@ -46,6 +48,7 @@ public class Watering : MonoBehaviour {
 	[RPC]
 	void sprinkle(bool on) {
 		particles.enableEmission = on;
+		playSounds = on;
 	}
 
 	void shakeOutline() {
@@ -76,6 +79,12 @@ public class Watering : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (playSounds && !audio.isPlaying) {
+			Debug.Log("Playing");
+			audio.clip = waterSounds[Mathf.FloorToInt(Random.value * waterSounds.Length)];
+			audio.Play();
+		}
+
 		if (!transform.networkView.isMine) return;
 
 		watered = false;
@@ -104,18 +113,15 @@ public class Watering : MonoBehaviour {
 					} else {
 						shakeOutline();
 					}
-				} else {
-					if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, false);
-					particles.enableEmission = false;
 				}
 			}
 		}
 
 		if (watered) {
-			if (!particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, true);
+			if (!particles.enableEmission) networkView.RPC("sprinkle", RPCMode.All, true);
 			particles.enableEmission = true;
 		} else {
-			if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, false);
+			if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.All, false);
 			particles.enableEmission = false;
 		}
 	}
