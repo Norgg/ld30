@@ -5,8 +5,7 @@ public class Crosshair : MonoBehaviour {
 	public Texture2D crosshairTexture;
 	Rect position;
 	
-	void Start()
-	{
+	void Start() {
 		position = new Rect((Screen.width - crosshairTexture.width) / 2, 
 		                	(Screen.height - crosshairTexture.height) / 2, 
 		                	crosshairTexture.width, 
