@@ -15,7 +15,7 @@ public class Crosshair : MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown("escape")) Screen.lockCursor = false;
+		if (Input.GetKeyDown(KeyCode.Escape)) Screen.lockCursor = false;
 		if (Input.GetMouseButtonDown(0)) Screen.lockCursor = true;
 	}
 	
