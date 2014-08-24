@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2300000}
   - 148: {fileID: 14800006}
   m_Layer: 0
-  m_Name: wallz-
+  m_Name: Wallz-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ GameObject:
   - 23: {fileID: 2300002}
   - 148: {fileID: 14800004}
   m_Layer: 0
-  m_Name: wallz+
+  m_Name: Wallz+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,7 @@ GameObject:
   - 23: {fileID: 2300004}
   - 148: {fileID: 14800002}
   m_Layer: 0
-  m_Name: wallx-
+  m_Name: Wallx-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ GameObject:
   - 23: {fileID: 2300006}
   - 148: {fileID: 14800000}
   m_Layer: 0
-  m_Name: wallx+
+  m_Name: Wallx+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ GameObject:
   - 23: {fileID: 2300008}
   - 148: {fileID: 14800010}
   m_Layer: 0
-  m_Name: sky
+  m_Name: Sky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ GameObject:
   - 23: {fileID: 2300010}
   - 148: {fileID: 14800008}
   m_Layer: 0
-  m_Name: ground
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

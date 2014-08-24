@@ -20,7 +20,6 @@ public class Connect : MonoBehaviour {
 
 	[RPC]
 	void RemoveWall(NetworkViewID id) {
-		Debug.Log("Removing wall: " + id);
 		Network.RemoveRPCs(id);
 		Destroy(NetworkView.Find(id).gameObject);
 	}
@@ -41,29 +40,29 @@ public class Connect : MonoBehaviour {
 					Vector3 newPos = new Vector3(world.transform.position.x + worldSize, 0, world.transform.position.z);
 					foreach (GameObject w in worlds) if (w.transform.position.Equals(newPos)) return;
 					newWorld = (GameObject)Network.Instantiate(worldObj, newPos, Quaternion.identity, 0);
-					networkView.RPC("RemoveWall", RPCMode.AllBuffered, world.transform.Find("wallx+").networkView.viewID);
-					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("wallx-").networkView.viewID);
+					networkView.RPC("RemoveWall", RPCMode.AllBuffered, world.transform.Find("Wallx+").networkView.viewID);
+					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("Wallx-").networkView.viewID);
 				} else if (dir == 1) {
 					//-x
 					Vector3 newPos = new Vector3(world.transform.position.x - worldSize, 0, world.transform.position.z);
 					foreach (GameObject w in worlds) if (w.transform.position.Equals(newPos)) return;
 					newWorld = (GameObject)Network.Instantiate(worldObj, newPos, Quaternion.identity, 0);
-					networkView.RPC("RemoveWall", RPCMode.AllBuffered, world.transform.Find("wallx-").networkView.viewID);
-					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("wallx+").networkView.viewID);
+					networkView.RPC("RemoveWall", RPCMode.AllBuffered, world.transform.Find("Wallx-").networkView.viewID);
+					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("Wallx+").networkView.viewID);
 				} else if (dir == 2) {
 					//+z
 					Vector3 newPos = new Vector3(world.transform.position.x, 0, world.transform.position.z + worldSize);
 					foreach (GameObject w in worlds) if (w.transform.position.Equals(newPos)) return;
 					newWorld = (GameObject)Network.Instantiate(worldObj, newPos, Quaternion.identity, 0);
-					networkView.RPC("RemoveWall", RPCMode.AllBuffered, world.transform.Find("wallz+").networkView.viewID);
-					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("wallz-").networkView.viewID);
+					networkView.RPC("RemoveWall", RPCMode.AllBuffered, world.transform.Find("Wallz+").networkView.viewID);
+					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("Wallz-").networkView.viewID);
 				} else if (dir == 3) {
 					//-z
 					Vector3 newPos = new Vector3(world.transform.position.x, 0, world.transform.position.z - worldSize);
 					foreach (GameObject w in worlds) if (w.transform.position.Equals(newPos)) return;					
 					newWorld = (GameObject)Network.Instantiate(worldObj, newPos, Quaternion.identity, 0);
-					networkView.RPC("RemoveWall", RPCMode.AllBuffered, world.transform.Find("wallz-").networkView.viewID);
-					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("wallz+").networkView.viewID);
+					networkView.RPC("RemoveWall", RPCMode.AllBuffered, world.transform.Find("Wallz-").networkView.viewID);
+					networkView.RPC("RemoveWall", RPCMode.AllBuffered, newWorld.transform.Find("Wallz+").networkView.viewID);
 				}
 				Network.Instantiate(playerObj, new Vector3(newWorld.transform.position.x, 1, newWorld.transform.position.z), Quaternion.identity, 0);
 				worldCreated = true;
