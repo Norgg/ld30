@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Planting : MonoBehaviour {
 	GameObject heldSeed = null;
+	public GameObject seedlingObj;
 	Transform cam;
 	Transform arm;
 
@@ -11,6 +12,7 @@ public class Planting : MonoBehaviour {
 		cam = transform.Find("Player Camera").transform;
 	}
 
+	[RPC]
 	void RemoveSeed(NetworkViewID id) {
 		Network.RemoveRPCs(id);
 		Destroy(NetworkView.Find(id).gameObject);
@@ -25,7 +27,7 @@ public class Planting : MonoBehaviour {
 				Debug.Log("Raycasting");
 				RaycastHit hit;
 				Vector3 fwd = cam.TransformDirection(Vector3.forward);
-				if (Physics.Raycast(cam.position, fwd, out hit)) {
+				if (Physics.Raycast(cam.position, fwd, out hit, 3.0f)) {
 					if (hit.transform.name.StartsWith("Seed")) {
 						heldSeed = hit.transform.gameObject;
 						Debug.Log("Picked up a seed");
@@ -37,12 +39,13 @@ public class Planting : MonoBehaviour {
 			if (Input.GetMouseButtonDown(0)) {
 				RaycastHit hit;
 				Vector3 fwd = cam.TransformDirection(Vector3.forward);
-				if (Physics.Raycast(cam.position, fwd, out hit)) {
+				if (Physics.Raycast(cam.position, fwd, out hit, 3.0f)) {
 					if (hit.transform.name.StartsWith("Ground")) {
 						//plant seed
 						Debug.Log ("Planting seed");
-						RemoveSeed(heldSeed.networkView.viewID);
+						networkView.RPC("RemoveSeed", RPCMode.AllBuffered, heldSeed.networkView.viewID);
 						heldSeed = null;
+						Network.Instantiate(seedlingObj, hit.point, Quaternion.identity, 0);
 					}
 				}
 			}
