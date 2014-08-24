@@ -11,7 +11,9 @@ public class Watering : MonoBehaviour {
 	static int maxWater = 3000;
 	int water = maxWater;
 	Vector3 baseWaterScale;
-	
+
+	public GameObject particleSystemObj;
+	ParticleSystem particles;
 
 
 	// Use this for initialization
@@ -21,6 +23,9 @@ public class Watering : MonoBehaviour {
 		outlineWater = transform.Find("Outline Water");
 		outlinePos = outlineWater.localPosition;
 		baseWaterScale = heldWater.transform.localScale;
+		particles = ((GameObject)Network.Instantiate(particleSystemObj, transform.position, Quaternion.identity, 0)).particleSystem;
+		particles.enableEmission = false;
+		particles.transform.parent = transform;
 	}
 
 	[RPC]
@@ -48,9 +53,13 @@ public class Watering : MonoBehaviour {
 					if (water > 0) {
 						networkView.RPC("WaterPlant", RPCMode.All, hit.transform.networkView.viewID);
 						//hit.transform.GetComponent<Grow>().water+=5;
+						particles.transform.localPosition = Vector3.zero;
+						particles.transform.LookAt(hit.transform.position);
+						particles.enableEmission = true;
 						water-=10;
 						heldWater.transform.localScale = baseWaterScale * water / (float)maxWater;
 					} else {
+						particles.enableEmission = false;
 						Hashtable opts = new Hashtable();
 						opts.Add("amount", new Vector3(0.02f, 0.02f, 0.02f));
 						opts.Add("time", 0.3f);
@@ -61,10 +70,16 @@ public class Watering : MonoBehaviour {
 						iTween.ShakePosition(outlineWater.gameObject, opts);
 					}
 				} else if (hit.transform.name.StartsWith("Water") && water < maxWater) {
+					particles.transform.position = hit.transform.position;
+					particles.transform.LookAt(transform.position);
+					particles.enableEmission = true;
+
 					water+= 20;
 					heldWater.transform.localScale = baseWaterScale * water / (float)maxWater;
 				}
 			}
+		} else {
+			particles.enableEmission = false;
 		}
 	}
 }

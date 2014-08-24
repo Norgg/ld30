@@ -796,6 +796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce77cdfeedb62934db56717517ccbaae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleSystemObj: {fileID: 100000, guid: fa57b70b30031cc418f9bc1fd6efd0ba, type: 2}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
