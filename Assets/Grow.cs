@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 public class Grow : MonoBehaviour {
-	static int startWater = 4000;
+	static int startWater = 2000;
 	public int water = 0;
 	float maxScale = 3;
 	Color thirstyColor = new Color(0.5f, 0.5f, 0.5f);
@@ -27,14 +27,15 @@ public class Grow : MonoBehaviour {
 		if (!transform.networkView.isMine) return;
 		if (daycycle.sunlight < 0.5f) return;
 		if (water > 0) water--;
+		if (water > startWater) water = startWater;
 
 		foreach (GameObject petal in petals) {
 			petal.transform.position = new Vector3(transform.position.x, transform.position.y + transform.localScale.y/2, transform.position.z);
 			petal.transform.localScale = new Vector3(transform.localScale.y/30, transform.localScale.y/3, transform.localScale.y/30);
 		}
 
-		if (water < startWater/2) {
-			renderer.material.color = Color.Lerp(thirstyColor, baseColor, water/((float)startWater/2));
+		if (water < startWater/3) {
+			renderer.material.color = Color.Lerp(thirstyColor, baseColor, water/((float)startWater/3));
 		} else {
 			renderer.material.color = baseColor;
 			if (transform.networkView.isMine) {

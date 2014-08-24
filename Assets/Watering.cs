@@ -15,6 +15,7 @@ public class Watering : MonoBehaviour {
 	public GameObject particleSystemObj;
 	ParticleSystem particles;
 
+	bool watered = false;
 
 	// Use this for initialization
 	void Start () {
@@ -46,48 +47,73 @@ public class Watering : MonoBehaviour {
 	void sprinkle(bool on) {
 		particles.enableEmission = on;
 	}
+
+	void shakeOutline() {
+		Hashtable opts = new Hashtable();
+		opts.Add("amount", new Vector3(0.01f, 0.01f, 0.01f));
+		opts.Add("time", 0.1f);
+		opts.Add("islocal", false);
+		opts.Add("oncomplete", "RestoreOutline");
+		opts.Add("oncompletetarget", gameObject);
+		
+		iTween.ShakePosition(outlineWater.gameObject, opts);
+	}
+
+	void waterSprout(Transform plant) {
+		//Debug.Log("Watering");
+		if (water > 0) {
+			networkView.RPC("WaterPlant", RPCMode.All, plant.networkView.viewID);
+			//hit.transform.GetComponent<Grow>().water+=5;
+			particles.transform.localPosition = Vector3.zero;
+			particles.transform.LookAt(plant.transform.position);
+			watered = true;
+			water-=10;
+			heldWater.transform.localScale = baseWaterScale * water / (float)maxWater;
+		} else {
+			shakeOutline();
+		}
+	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!transform.networkView.isMine) return;
+
+		watered = false;
 
 		if (Input.GetMouseButton(0)) {
 			RaycastHit hit;
 			Vector3 fwd = cam.TransformDirection(Vector3.forward);
 			if (Physics.Raycast(cam.position, fwd, out hit, 3.0f)) {
 				if (hit.transform.name.StartsWith("Sprout")) {
-					//Debug.Log("Watering");
-					if (water > 0) {
-						networkView.RPC("WaterPlant", RPCMode.All, hit.transform.networkView.viewID);
-						//hit.transform.GetComponent<Grow>().water+=5;
-						particles.transform.localPosition = Vector3.zero;
-						particles.transform.LookAt(hit.transform.position);
-						if (!particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, true);
-						particles.enableEmission = true;
-						water-=10;
+					waterSprout(hit.transform);
+				} else if (hit.transform.name.StartsWith("Ground")) {
+					Collider[] colliders = Physics.OverlapSphere(hit.point, 1.0f);
+					foreach (Collider c in colliders) {
+						if (c.name.StartsWith("Sprout")) {
+							waterSprout(c.transform);
+							break;
+						}
+					}
+				} else if (hit.transform.name.StartsWith("Water")) {
+					if (water < maxWater) {
+						particles.transform.position = hit.transform.position;
+						particles.transform.LookAt(transform.position);
+						watered = true;
+						water+= 20;
 						heldWater.transform.localScale = baseWaterScale * water / (float)maxWater;
 					} else {
-						if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, false);
-						particles.enableEmission = false;
-						Hashtable opts = new Hashtable();
-						opts.Add("amount", new Vector3(0.02f, 0.02f, 0.02f));
-						opts.Add("time", 0.3f);
-						opts.Add("islocal", false);
-						opts.Add("oncomplete", "RestoreOutline");
-						opts.Add("oncompletetarget", gameObject);
-
-						iTween.ShakePosition(outlineWater.gameObject, opts);
+						shakeOutline();
 					}
-				} else if (hit.transform.name.StartsWith("Water") && water < maxWater) {
-					particles.transform.position = hit.transform.position;
-					particles.transform.LookAt(transform.position);
-					if (!particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, true);
-					particles.enableEmission = true;
-
-					water+= 20;
-					heldWater.transform.localScale = baseWaterScale * water / (float)maxWater;
+				} else {
+					if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, false);
+					particles.enableEmission = false;
 				}
 			}
+		}
+
+		if (watered) {
+			if (!particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, true);
+			particles.enableEmission = true;
 		} else {
 			if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.Others, false);
 			particles.enableEmission = false;
