@@ -6,10 +6,13 @@ public class Grow : MonoBehaviour {
 	public int water = 0;
 	float maxScale = 3;
 	Color thirstyColor = new Color(0.5f, 0.5f, 0.5f);
+	Color deadColor = new Color(0, 0, 0);
 	Color baseColor;
 	Color petalColor;
 	List<GameObject> petals = new List<GameObject>();
 	Daycycle daycycle;
+
+	bool dead = false;
 
 	public GameObject seedObj;
 	int seeds = 2;
@@ -27,8 +30,8 @@ public class Grow : MonoBehaviour {
 	
 	void Update () {
 		if (!transform.networkView.isMine) return;
-		if (daycycle.sunlight < 0.5f) return;
-		if (water > 0) water--;
+		if (dead) return;
+		if (water > -startWater	&& daycycle.sunlight > 0.5f) water--;
 		if (water > startWater) water = startWater;
 
 		foreach (GameObject petal in petals) {
@@ -36,11 +39,24 @@ public class Grow : MonoBehaviour {
 			petal.transform.localScale = new Vector3(transform.localScale.y/30, transform.localScale.y/3, transform.localScale.y/30);
 		}
 
-		if (water < startWater/3) {
+		if (water == -startWater) {
+			dead = true;
+			renderer.material.color = deadColor;
+			foreach (GameObject petal in petals) {
+				petal.renderer.material.color = deadColor;
+			}
+		} else if (water < 0) {
+			foreach (GameObject petal in petals) {
+				petal.renderer.material.color = Color.Lerp(petalColor, thirstyColor, (startWater+water)/startWater);
+			}
+		} else if (water < startWater/3) {
 			renderer.material.color = Color.Lerp(thirstyColor, baseColor, water/((float)startWater/3));
+			foreach (GameObject petal in petals) {
+				petal.renderer.material.color = petalColor;
+			}
 		} else {
 			renderer.material.color = baseColor;
-			if (transform.networkView.isMine) {
+			if (transform.networkView.isMine && daycycle.sunlight > 0.5) {
 				if (transform.localScale.y < maxScale) {
 					transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 1.0005f, transform.localScale.z);
 				}
@@ -49,10 +65,6 @@ public class Grow : MonoBehaviour {
 					seeds--;
 				}
 			}
-		}
-
-		if (water == 0) {
-			// Kill it
 		}
 	}
 
