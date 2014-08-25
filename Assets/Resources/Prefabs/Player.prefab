@@ -833,7 +833,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sproutObj: {fileID: 100000, guid: d9a886de92a562349b2f7c5aaf8579ea, type: 2}
   pickClip: {fileID: 8300000, guid: 5a74fed39a4646244948adf9c0fb4652, type: 3}
-  chatSounds: []
+  chatSounds:
+  - {fileID: 8300000, guid: 1036e1b5367034c49917700e170cf970, type: 3}
+  - {fileID: 8300000, guid: 899cf36ec21009b4385c2e11e15e1aef, type: 3}
+  - {fileID: 8300000, guid: 09a627381e8a0394d963a12f5b257864, type: 3}
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -15,8 +15,8 @@ public class Daycycle : MonoBehaviour {
 	void Update () {
 		transform.Rotate(new Vector3(0.1f, 0, 0));
 		sunlight = 0.6f + Mathf.Sin((transform.localEulerAngles.x) * Mathf.Deg2Rad)/2;
-		if (sunlight > 0.4 && sunlight < 0.8) {
-			light.color = Color.Lerp(setCol, lightCol, (sunlight-0.6f)*5);
+		if (sunlight < 0.8) {
+			light.color = Color.Lerp(setCol, lightCol, Mathf.Abs(sunlight-0.6f)*5);
 		} else {
 			light.color = lightCol;
 		}

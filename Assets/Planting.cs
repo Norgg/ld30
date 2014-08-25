@@ -55,7 +55,7 @@ public class Planting : MonoBehaviour {
 						networkView.RPC("RemoveSeed", RPCMode.AllBuffered, heldSeed.networkView.viewID);
 						heldSeed = null;
 						Network.Instantiate(sproutObj, hit.point, Quaternion.identity, 0);
-					} else if (hit.transform.name.StartsWith("Player")) {
+					} else if (hit.transform.name.StartsWith("Player") || hit.transform.name.StartsWith("Body")) {
 						networkView.RPC("Chat", RPCMode.All);
 					} else {
 						heldSeed.rigidbody.velocity = new Vector3(0, 0, 0);
