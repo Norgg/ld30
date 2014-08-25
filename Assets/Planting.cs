@@ -7,6 +7,7 @@ public class Planting : MonoBehaviour {
 	Transform cam;
 	Transform arm;
 	public AudioClip pickClip;
+	public AudioClip[] chatSounds;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +18,11 @@ public class Planting : MonoBehaviour {
 	void RemoveSeed(NetworkViewID id) {
 		Network.RemoveRPCs(id);
 		Destroy(NetworkView.Find(id).gameObject);
+	}
+
+	[RPC]
+	void Chat() {
+		audio.PlayOneShot(chatSounds[Mathf.FloorToInt(Random.value * chatSounds.Length)]);
 	}
 
 	// Update is called once per frame
@@ -32,6 +38,8 @@ public class Planting : MonoBehaviour {
 						heldSeed = hit.transform.gameObject;
 						Debug.Log("Picked up a seed");
 						audio.PlayOneShot(pickClip);
+					} else if (hit.transform.name.StartsWith("Player")) {
+						networkView.RPC("Chat", RPCMode.All);
 					}
 				}
 			}
@@ -47,6 +55,8 @@ public class Planting : MonoBehaviour {
 						networkView.RPC("RemoveSeed", RPCMode.AllBuffered, heldSeed.networkView.viewID);
 						heldSeed = null;
 						Network.Instantiate(sproutObj, hit.point, Quaternion.identity, 0);
+					} else if (hit.transform.name.StartsWith("Player")) {
+						networkView.RPC("Chat", RPCMode.All);
 					} else {
 						heldSeed.rigidbody.velocity = new Vector3(0, 0, 0);
 						heldSeed = null;

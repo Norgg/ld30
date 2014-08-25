@@ -17,7 +17,6 @@ public class Watering : MonoBehaviour {
 
 	public AudioClip[] waterSounds;
 
-
 	bool watered = false;
 	bool playSounds = false;
 
@@ -28,11 +27,9 @@ public class Watering : MonoBehaviour {
 		outlineWater = transform.Find("Outline Water");
 		outlinePos = outlineWater.localPosition;
 		baseWaterScale = heldWater.transform.localScale;
-		if (networkView.isMine) {
-			particles = ((GameObject)Network.Instantiate(particleSystemObj, transform.position, Quaternion.identity, 0)).particleSystem;
-			particles.enableEmission = false;
-			particles.transform.parent = transform;
-		}
+		particles = ((GameObject)GameObject.Instantiate(particleSystemObj, transform.position, Quaternion.identity)).particleSystem;
+		particles.enableEmission = false;
+		particles.transform.parent = transform;
 	}
 
 	[RPC]
@@ -119,10 +116,10 @@ public class Watering : MonoBehaviour {
 		}
 
 		if (watered) {
-			if (!particles.enableEmission) networkView.RPC("sprinkle", RPCMode.All, true);
+			if (!particles.enableEmission) networkView.RPC("sprinkle", RPCMode.AllBuffered, true);
 			particles.enableEmission = true;
 		} else {
-			if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.All, false);
+			if (particles.enableEmission) networkView.RPC("sprinkle", RPCMode.AllBuffered, false);
 			particles.enableEmission = false;
 		}
 	}
